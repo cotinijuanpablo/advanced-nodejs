@@ -1,0 +1,12 @@
+There are five major classes in the http module
+-http.Server to create the servers, inherits from net.server so Event Emitter
+-http.ServerResponse gets created internally by http server
+-http.Agent class is used to manage pooling sockets use in client request
+    -we can create one with different optiosn than the default glboal
+-http.ClientRequest, when we initiate a client request
+-http.IncomingMessage is what we see server side
+
+ServerResponse and ClientRequest implement WritableStream Interface, so EventEmitter
+
+IncomingMessage implement ReadableStream Interface, also EventEmitter.
+

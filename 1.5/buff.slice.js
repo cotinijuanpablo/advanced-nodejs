@@ -17,3 +17,6 @@ fs.readFile(__filename, (err, buffer) => {
 });
 
 // TAG: XYZ
+
+
+//slice in buffers change the original also

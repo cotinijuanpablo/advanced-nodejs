@@ -18,6 +18,7 @@ server.bind(PORT, HOST);
 const client = dgram.createSocket('udp4');
 const msg = Buffer.from('Pluralsight rocks');
 
+//Each time a different Port is used, i can check this by doing an interval for example
 client.send(msg, 0, msg.length, PORT, HOST, (err) => {
   if (err) throw err;
 

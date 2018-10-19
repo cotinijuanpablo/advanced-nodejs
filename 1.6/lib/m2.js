@@ -5,4 +5,4 @@ exports.content.push(22);
 exports.content.push(222);
 
 const m1 = require('./m1');
-console.log('m1 is not loaded yet', m1);
+console.log('m1 is not loaded yet', m1); //partial print of m1, and loaded is false

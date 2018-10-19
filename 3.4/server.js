@@ -1,54 +1,80 @@
 const EventEmitter = require('events');
 
 class Server extends EventEmitter {
-  constructor(client) {
+  constructor(client){
     super();
+    //container of tasks
     this.tasks = {};
+    //counter new task
     this.taskId = 1;
-    process.nextTick(() => {
+    //I do this because the on from the client is done after the server creation.
+    process.nextTick(()=>{
       this.emit(
         'response',
-        'Type a command (help to list commands)'
+        'Type command (help to list commands'
       );
-    });
-    client.on('command', (command, args) => {
-      switch (command) {
-      case 'help':
-      case 'add':
-      case 'ls':
-      case 'delete':
-        this[command](args);
-        break;
-      default:
-        this.emit('response', 'Unknown command...');
+    })
+    client.on('command', (command, args)=> {
+      switch(command){
+        case 'help':
+        case 'ls':
+        case 'add':
+        case 'delete':
+          //I access the attributes/methods of a class as an array
+          this[command](args);
+          break
+        default:
+          this.emit('response', 'Uknown command...');
       }
     });
   }
-
+  /**
+   * @summary Returns tasks in existence
+   * @returns {string} - string of tasks
+   */
   tasksString() {
     return Object.keys(this.tasks).map(key => {
       return `${key}: ${this.tasks[key]}`;
     }).join('\n');
   }
 
-  help() {
-    this.emit('response', `Available Commands:
-  add task
-  ls
-  delete :id`
-    );
+  /**
+   * @summary for list of commands
+   */
+  help(){
+    this.emit('response',
+     `Available Commands:
+        help, for list of commands
+        ls to the current tasks
+        add to add a new tasks
+        delete to delete it
+    `);
   }
-  add(args) {
+
+  /**
+   * @summary Add a new tasks
+   * @param parameters are the arguments for the task
+   */
+  add(args){
     this.tasks[this.taskId] = args.join(' ');
-    this.emit('response', `Added task ${this.taskId}`);
+    this.emit('response', `Added task ${this.taskId}`)
     this.taskId++;
   }
-  ls() {
-    this.emit('response', `Tasks:\n${this.tasksString()}`);
-  }
-  delete(args) {
+
+  /**
+   * @summary to the current tasks
+   */
+  ls(){
+    this.emit('response', `Tasks: \n${this.tasksString()}`);
+  } 
+
+  /**
+   * @summary to delete it
+   * @param args - first should be the ID for the task to be deleted
+   */
+  delete(args){
     delete(this.tasks[args[0]]);
-    this.emit('response', `Deleted task ${args[0]}`);
+    this.emit('response', `Deleted task ${args[0]}`)
   }
 }
 

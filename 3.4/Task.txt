@@ -1,0 +1,9 @@
+Task List Manager
+Client emits commands
+Server emits response
+
+command are:
+help, for list of commands
+ls to the current tasks
+add to add a new tasks
+delete to delete it

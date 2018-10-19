@@ -11,3 +11,4 @@ process.stdin.on('readable', () => {
 });
 
 // 0xE2, 0x82, 0xAC -> €
+// If you receive UTF-8 bytes as chucks ina  string, use strign decoder
